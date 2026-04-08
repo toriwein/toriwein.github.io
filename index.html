@@ -703,7 +703,7 @@
 <footer>
   <p><strong>Victoria Rose Weinsheimer</strong></p>
   <p style="margin-top:8px;">
-    <a href="mailto:weinsheimer.victoria@gmail.com">weinsheimer.victoria@gmail.com</a>
+    <a id="contact-email" href="#">&#x5B;loading&#x5D;</a>
     &nbsp;·&nbsp;
     <a href="https://linkedin.com/in/victoria-weinsheimer" target="_blank">LinkedIn</a>
     &nbsp;·&nbsp; New York, NY
@@ -740,19 +740,36 @@
   if (skillsSection) skillObs.observe(skillsSection);
 </script>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-  <img id="lightbox-img" src="" alt="">
+
+
+<!-- Email set via JS to prevent scraper/CDN mangling -->
+<script>
+(function() {
+  var u = 'weinsheimer.victoria';
+  var d = 'gmail.com';
+  var el = document.getElementById('contact-email');
+  if (el) {
+    el.href = 'mailto:' + u + '@' + d;
+    el.textContent = u + '@' + d;
+  }
+})();
+</script>
+
+<!-- Lightbox -->
+<div id="lb" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.92);z-index:9999;align-items:center;justify-content:center;padding:24px;cursor:zoom-out;" onclick="this.style.display='none'">
+  <span onclick="document.getElementById('lb').style.display='none'" style="position:fixed;top:16px;right:24px;color:white;font-size:36px;cursor:pointer;line-height:1;z-index:10000;">&times;</span>
+  <img id="lb-img" src="" alt="" style="max-width:92vw;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
 </div>
 <script>
 function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox').classList.add('open');
+  var lb = document.getElementById('lb');
+  var img = document.getElementById('lb-img');
+  img.src = src;
+  lb.style.display = 'flex';
 }
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('lb').style.display = 'none';
+});
 </script>
 
 </body>
