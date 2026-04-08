@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Victoria Weinsheimer — Analytics Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B4F8A;
+    --navy-dark: #0f2f54;
+    --navy-mid: #2a5fa0;
+    --accent: #4A90D9;
+    --accent-soft: #c8ddf5;
+    --gold: #C9A84C;
+    --bg: #F7F9FC;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7a99;
+    --border: #dde4f0;
+    --card-bg: #ffffff;
+    --tag-bg: #EBF2FB;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+    color: white;
+    padding: 80px 40px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(74,144,217,0.12);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 10%;
+    width: 500px; height: 200px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.07);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 62px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.25s forwards;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.75);
+    max-width: 540px;
+    margin-bottom: 32px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.55s forwards;
+  }
+  .pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+  }
+
+  /* wave divider */
+  .wave {
+    display: block;
+    width: 100%;
+    margin-top: -2px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .section {
+    padding: 64px 0 40px;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--navy-dark);
+    margin-bottom: 40px;
+  }
+
+  /* ── PROJECT CARDS ── */
+  .projects-grid {
+    display: grid;
+    gap: 32px;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    box-shadow: 0 2px 12px rgba(27,79,138,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeUp 0.6s ease both;
+  }
+  .project-card:nth-child(1) { animation-delay: 0.1s; }
+  .project-card:nth-child(2) { animation-delay: 0.25s; }
+  .project-card:nth-child(3) { animation-delay: 0.4s; }
+  .project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(27,79,138,0.13);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+    padding: 32px 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .card-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .card-course {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+  }
+
+  .card-body {
+    padding: 28px 36px 32px;
+  }
+
+  .card-section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 10px;
+    margin-top: 24px;
+  }
+  .card-section-title:first-child { margin-top: 0; }
+
+  .card-body p {
+    font-size: 15px;
+    color: #3a4460;
+    line-height: 1.7;
+    margin-bottom: 4px;
+  }
+
+  .card-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card-body ul li {
+    font-size: 15px;
+    color: #3a4460;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .card-body ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--navy);
+    font-size: 12px;
+    top: 3px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--navy);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+    border: 1px solid var(--accent-soft);
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #EBF2FB, #f0f6ff);
+    border-left: 3px solid var(--navy);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-top: 10px;
+  }
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--navy-dark);
+    font-weight: 500;
+  }
+
+  /* ── PLACEHOLDER CARD ── */
+  .add-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 2px dashed var(--border);
+    padding: 48px 36px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .add-card:hover {
+    border-color: var(--navy);
+    background: var(--tag-bg);
+  }
+  .add-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--tag-bg);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 22px;
+    color: var(--navy);
+  }
+  .add-card p { color: var(--muted); font-size: 15px; }
+  .add-card strong { color: var(--navy); display: block; margin-bottom: 6px; font-size: 16px; }
+
+  /* ── SKILLS SECTION ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .skill-chip {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy-dark);
+    box-shadow: 0 1px 4px rgba(27,79,138,0.05);
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeUp 0.5s ease both;
+  }
+  .skill-chip.visible { opacity: 1; transform: translateY(0); }
+  .skill-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--navy);
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy-dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    font-size: 14px;
+  }
+  footer a { color: var(--accent-soft); text-decoration: none; }
+  footer strong { color: white; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 56px 24px 80px; }
+    .container { padding: 0 20px; }
+    .card-header, .card-body { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">MS Business Analytics · Baruch College</p>
+    <h1>Victoria<br><em>Weinsheimer</em><br>Analytics Portfolio</h1>
+    <p class="hero-sub">A collection of graduate-level data analytics projects spanning Python development, data visualization, and applied statistical analysis.</p>
+    <div class="hero-pills">
+      <span class="pill">Python</span>
+      <span class="pill">SQL</span>
+      <span class="pill">Pandas</span>
+      <span class="pill">Matplotlib</span>
+      <span class="pill">Seaborn</span>
+      <span class="pill">APIs</span>
+      <span class="pill">Plotly / Dash</span>
+      <span class="pill">Data Visualization</span>
+      <span class="pill">Statistical Analysis</span>
+      <span class="pill">Machine Learning</span>
+      <span class="pill">scikit-learn</span>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z" fill="#F7F9FC"/>
+</svg>
+
+<!-- PROJECTS -->
+<div class="container">
+  <section class="section">
+    <p class="section-label">Graduate Projects</p>
+    <h2 class="section-title">Featured Work</h2>
+
+    <div class="projects-grid">
+
+      <!-- PROJECT 1: NYT News Analyzer -->
+      <article class="project-card" data-scroll>
+        <div class="card-header">
+          <p class="card-number">PROJECT 01</p>
+          <h3 class="card-title">NYT News Analyzer</h3>
+          <p class="card-course">Python Programming · Final Exam Project</p>
+        </div>
+        <div class="card-body">
+
+          <p class="card-section-title">Overview</p>
+          <p>A fully interactive Python application that queries the New York Times Article Search API to analyze keyword trends and publishing patterns across news sections. Users define the section, date range, and time granularity — the app handles data collection, analysis, and visualization end-to-end.</p>
+
+          <p class="card-section-title">Key Features</p>
+          <ul>
+            <li>Built a dynamic API integration using <strong>requests</strong> to fetch and paginate NYT articles by section, keyword filter, and date range — with the API key stored securely in a separate config file</li>
+            <li>Used <strong>pandas</strong> to extract, flatten, and structure article data (headlines, publication dates, keyword arrays) into an analysis-ready DataFrame</li>
+            <li>Computed keyword frequency rankings to surface the most-discussed topics within any given section and time window</li>
+            <li>Implemented flexible time-series resampling (daily / weekly / monthly) to track how article volume and topic interest shift over time</li>
+            <li>Generated three distinct visualizations: a horizontal bar chart of top keywords, a line graph of publishing cadence over time, and a publication-date bar chart of top headlines</li>
+          </ul>
+
+          <p class="card-section-title">Visualizations Produced</p>
+          <ul>
+            <li>Horizontal bar chart — top 10 most frequently mentioned keywords in the selected section</li>
+            <li>Line graph — article volume over time at user-selected periodicity (daily / weekly / monthly)</li>
+            <li>Headline bar chart — top 10 headlines mapped to their publication dates</li>
+          </ul>
+
+          <div class="highlight-box">
+            <p>🔍 Demonstrated live during an oral exam — ran the application end-to-end with live API calls, fielded instructor questions on design decisions and code logic.</p>
+          </div>
+
+          <p class="card-section-title">Tools & Libraries</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">Requests</span>
+            <span class="tag">NYT Article Search API</span>
+            <span class="tag">Jupyter Notebook</span>
+            <span class="tag">Time-Series Analysis</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 2: Personalized Medicine Dashboard -->
+      <article class="project-card" data-scroll>
+        <div class="card-header">
+          <p class="card-number">PROJECT 02</p>
+          <h3 class="card-title">Personalized Medicine &amp; Patient Satisfaction Dashboard</h3>
+          <p class="card-course">CIS9655 Data Visualization &middot; Group Final Project &middot; Dec 2025</p>
+        </div>
+        <div class="card-body">
+
+          <p class="card-section-title">Overview</p>
+          <p>A group research project investigating whether the growth of personalized medicine (PM) correlates with increased patient satisfaction measurement. Using 6,023 clinical trials (ClinicalTrials.gov, 2000&ndash;2024) and 34,815 hospital observations (CMS HCAHPS data), the team built an interactive six-visualization Python dashboard &mdash; and rigorously reported a null result.</p>
+
+          <p class="card-section-title">Research Question</p>
+          <p>Does the implementation of personalized medicine approaches affect patient satisfaction and health outcomes across different geographical regions?</p>
+
+          <p class="card-section-title">Key Findings</p>
+          <ul>
+            <li><strong>Hypothesis NOT supported:</strong> Statistical analysis found no significant relationship between PM adoption and patient satisfaction measurement (r = &minus;0.20, R&sup2; = 0.04, p = 0.40)</li>
+            <li><strong>PM growth was dramatic:</strong> Personalized medicine trials grew 2,500%+ from near-zero in 2000 to 520 trials in 2024 &mdash; a textbook &ldquo;hockey stick&rdquo; curve</li>
+            <li><strong>Satisfaction trended opposite:</strong> The highest PM era (2020&ndash;2024) showed lower satisfaction measurement (~28%) than the early 2000s peak (60%), suggesting the two are driven by entirely separate institutional forces</li>
+            <li><strong>Geographic disparities persist:</strong> A 1.8-star gap exists between top states (Wisconsin 3.89&#9733;, South Dakota 3.88&#9733;) and bottom (Puerto Rico 2.07&#9733;, DC 2.32&#9733;) &mdash; Midwest consistently outperforms coastal urban centers</li>
+          </ul>
+
+          <p class="card-section-title">Dashboard Visualizations (6 Interactive Charts)</p>
+          <ul>
+            <li>Dual-axis time-series line chart &mdash; PM trials vs. traditional trials vs. % measuring satisfaction (2000&ndash;2024)</li>
+            <li>US choropleth map &mdash; HCAHPS star ratings by state with RdYlGn color scale</li>
+            <li>Scatterplot with regression line &mdash; PM adoption % vs. satisfaction measurement % with Pearson r annotation</li>
+            <li>Regional bar chart &mdash; top 15 states ranked by patient satisfaction score</li>
+            <li>Enrollment trend chart &mdash; total and average patient enrollment over time</li>
+            <li>Study status donut chart &mdash; 39.9% completed, 24.9% recruiting, 5% terminated</li>
+          </ul>
+
+          <div class="highlight-box">
+            <p>&#128202; Datasets: 6,023 clinical trials (ClinicalTrials.gov API v2) + 34,815 hospital observations (CMS Hospital Compare) &middot; Final sample: 3,176 unique hospitals across 51 states</p>
+          </div>
+
+          <p class="card-section-title">Tools &amp; Libraries</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Plotly</span>
+            <span class="tag">Dash</span>
+            <span class="tag">SciPy</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">ClinicalTrials.gov API</span>
+            <span class="tag">CMS HCAHPS Data</span>
+            <span class="tag">Pearson Correlation</span>
+            <span class="tag">Geospatial Visualization</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- PROJECT 3: Student Performance Prediction -->
+      <article class="project-card" data-scroll>
+        <div class="card-header">
+          <p class="card-number">PROJECT 03</p>
+          <h3 class="card-title">Predicting Student Academic Performance: A Data Mining Approach</h3>
+          <p class="card-course">CIS9660 Data Mining &middot; Group Final Project &middot; Dec 2025</p>
+        </div>
+        <div class="card-body">
+
+          <p class="card-section-title">Overview</p>
+          <p>A machine learning study using the UCI Student Performance dataset (395 students, 33 variables) to build an early warning system for at-risk students. The team developed both regression models (predicting final grades on a 0&ndash;20 scale) and classification models (flagging at-risk students before they fail), comparing linear, tree-based, and ensemble approaches with 10-fold cross-validation throughout.</p>
+
+          <p class="card-section-title">Research Questions</p>
+          <ul>
+            <li><strong>Regression:</strong> What factors most significantly predict a student&rsquo;s final grade (continuous 0&ndash;20)?</li>
+            <li><strong>Classification:</strong> Can we accurately identify at-risk students (grade &lt; 10) early enough for effective intervention?</li>
+          </ul>
+
+          <p class="card-section-title">Model Architecture</p>
+          <p>To address multicollinearity between G1/G2 prior grades (r = 0.852), three model variants were designed for different intervention windows:</p>
+          <ul>
+            <li><strong>Model A &mdash; Mid-Semester:</strong> Uses G2 (2nd period grade); best overall performance</li>
+            <li><strong>Model B &mdash; Early-Semester:</strong> Uses G1 (1st period grade) only</li>
+            <li><strong>Model C &mdash; Pre-Semester:</strong> No prior grades; demographics &amp; behavioral factors only</li>
+          </ul>
+
+          <p class="card-section-title">Key Results</p>
+          <ul>
+            <li><strong>Best regression model:</strong> Random Forest (Model A) &mdash; R&sup2; = 0.872, RMSE = 1.58 grade points, explaining 87% of variance in final grades</li>
+            <li><strong>Best classification model:</strong> Random Forest (Model A) &mdash; F1 = 0.871, Recall = 89.8%, ROC-AUC = 0.951; only 2 at-risk students missed in the test set</li>
+            <li><strong>Dominant predictor:</strong> G2 (prior grade) accounts for 84.3% of Random Forest feature importance &mdash; academic trajectories are highly stable within a semester</li>
+            <li><strong>Critical modifiable factor:</strong> Absences rank 2nd at 12.5% importance &mdash; the only non-grade predictor exceeding 1%, and directly actionable by schools</li>
+            <li><strong>Early intervention ceiling:</strong> Without any prior grades (Model C), best R&sup2; drops to 0.29, revealing the fundamental limits of demographic-only prediction</li>
+          </ul>
+
+          <div class="highlight-box">
+            <p>&#127979; Practical output: A 4-stage early warning system for administrators &mdash; from Week 1 demographic screening through Week 10 intensive intervention &mdash; with specific model recommendations for each stage and resource-constrained settings.</p>
+          </div>
+
+          <p class="card-section-title">Algorithms Compared</p>
+          <ul>
+            <li>Linear Regression &amp; Ridge Regression (baseline + regularized)</li>
+            <li>Logistic Regression (classification baseline)</li>
+            <li>Decision Tree Regressor &amp; Classifier (max_depth = 5)</li>
+            <li>Random Forest Regressor &amp; Classifier (100 trees, max_depth = 10)</li>
+          </ul>
+
+          <p class="card-section-title">Tools &amp; Libraries</p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">statsmodels</span>
+            <span class="tag">Random Forest</span>
+            <span class="tag">10-Fold Cross-Validation</span>
+            <span class="tag">Feature Importance Analysis</span>
+            <span class="tag">UCI ML Repository</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" style="padding-top: 16px;">
+    <p class="section-label">Technical Toolkit</p>
+    <h2 class="section-title">Skills Demonstrated</h2>
+    <div class="skills-grid">
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Python</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Pandas</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Matplotlib</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Seaborn</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Plotly</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Dash</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>SciPy / NumPy</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>REST API Integration</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>SQL</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Jupyter Notebooks</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Time-Series Analysis</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Data Visualization</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Statistical Analysis</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>scikit-learn</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Machine Learning</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Cross-Validation</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Excel / VBA</div>
+      <div class="skill-chip" data-skill><span class="skill-dot"></span>Tableau</div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Victoria Rose Weinsheimer</strong></p>
+  <p style="margin-top:8px;">
+    <a href="/cdn-cgi/l/email-protection#82f5e7ebecf1eae7ebefe7f0acf4ebe1f6edf0ebe3c2e5efe3ebeeace1edef"><span class="__cf_email__" data-cfemail="6c1b0905021f04090501091e421a050f18031e050d2c0b010d0500420f0301">[email&#160;protected]</span></a>
+    &nbsp;·&nbsp;
+    <a href="https://linkedin.com/in/victoria-weinsheimer" target="_blank">LinkedIn</a>
+    &nbsp;·&nbsp; New York, NY
+  </p>
+  <p style="margin-top:16px; font-size:12px; opacity:0.5;">MS Business Analytics · Baruch College · Expected July 2026</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll-triggered reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 120);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('[data-scroll]').forEach(el => observer.observe(el));
+
+  // Skills stagger
+  const skillObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('[data-skill]').forEach((chip, i) => {
+          setTimeout(() => chip.c
