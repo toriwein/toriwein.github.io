@@ -703,7 +703,7 @@
 <footer>
   <p><strong>Victoria Rose Weinsheimer</strong></p>
   <p style="margin-top:8px;">
-    <a href="/cdn-cgi/l/email-protection#82f5e7ebecf1eae7ebefe7f0acf4ebe1f6edf0ebe3c2e5efe3ebeeace1edef"><span class="__cf_email__" data-cfemail="6c1b0905021f04090501091e421a050f18031e050d2c0b010d0500420f0301">[email&#160;protected]</span></a>
+    <a href="mailto:weinsheimer.victoria@gmail.com">weinsheimer.victoria@gmail.com</a>
     &nbsp;·&nbsp;
     <a href="https://linkedin.com/in/victoria-weinsheimer" target="_blank">LinkedIn</a>
     &nbsp;·&nbsp; New York, NY
@@ -711,7 +711,7 @@
   <p style="margin-top:16px; font-size:12px; opacity:0.5;">MS Business Analytics · Baruch College · Expected July 2026</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Scroll-triggered reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -729,4 +729,31 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         document.querySelectorAll('[data-skill]').forEach((chip, i) => {
-          setTimeout(() => chip.c
+          setTimeout(() => chip.classList.add('visible'), i * 60);
+        });
+        skillObs.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const skillsSection = document.querySelector('.skills-grid');
+  if (skillsSection) skillObs.observe(skillsSection);
+</script>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
